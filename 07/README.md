@@ -4,8 +4,29 @@
 # Authentication - Are you logged in?. Authorization - Are you allowed?
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+'''
+render() → Template Response
+It:
+Takes a request
+Loads an HTML template
+Injects data (context)
+Returns an HTTP response
+
+redirect() → HTTP Redirect
+It tells the browser:
+“Go to another URL.”
+Browser then makes a new request to that URL.
+
+get_object_or_404()
+If object doesn’t exist:
+Django returns HTTP 404 page
+User sees “Not Found”
+Server does NOT crash
+'''
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
+
+# a temporary notification system between backend and frontend. Eg. "Leave approved successfully.”
+from django.contrib import messages 
 from django.utils import timezone
 from .models import LeaveRequest, LeaveBalance
 from .forms import LeaveReviewForm
@@ -14,14 +35,17 @@ def is_staff_user(user):
     """Check if user is staff"""
     return user.is_staff
 
+# Decorator Stack
 @login_required
 @user_passes_test(is_staff_user)
+
 def pending_requests(request):
     """View all pending leave requests"""
     leave_requests = LeaveRequest.objects.filter(
         status='pending'
-    ).order_by('-applied_on')
-    
+    ).order_by('-applied_on')                          # Newest first.
+
+# Loads the template file, Injects context data into it, Returns an HTTP response to browser -> Template + Context → Final HTML → Browser
     context = {
         'leave_requests': leave_requests,
     }
@@ -32,10 +56,21 @@ def pending_requests(request):
 @user_passes_test(is_staff_user)
 def review_leave(request, leave_id):
     """Review and approve/reject leave request"""
-    leave_request = get_object_or_404(LeaveRequest, id=leave_id)
-    
+    leave_request = get_object_or_404(LeaveRequest, id=leave_id)        # Prevents server crash.
+
+
+'''
+HTTP has methods:
+GET → Fetch data
+POST → Modify/Create data     # Correcting the existing data. Eg. Student Records
+PUT/PATCH → Update            # Replacing old value with new value. Eg. Stock Market
+DELETE → Delete
+
+Here you’re saying:
+“Only process form submission if this is a POST request.”
+'''
     if request.method == 'POST':
-        form = LeaveReviewForm(request.POST, instance=leave_request)
+        form = LeaveReviewForm(request.POST, instance=leave_request) # request.POST - Contains form data sent from browser, instance=leave_request - Without it: Django would create a NEW LeaveRequest. With it: Django updates the EXISTING object. - “Update this specific leave request using submitted data.”
         if form.is_valid():
             leave = form.save(commit=False)
             leave.reviewed_by = request.user
