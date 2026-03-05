@@ -71,6 +71,13 @@ Here you’re saying:
 '''
     if request.method == 'POST':
         form = LeaveReviewForm(request.POST, instance=leave_request) # request.POST - Contains form data sent from browser, instance=leave_request - Without it: Django would create a NEW LeaveRequest. With it: Django updates the EXISTING object. - “Update this specific leave request using submitted data.”
+
+'''
+Django internally checks:
+- Required fields present - Eg. leave_type missing
+- Data type correctness - invalid date format
+- Model constraints - age negative 
+'''
         if form.is_valid():
             leave = form.save(commit=False)
             leave.reviewed_by = request.user
