@@ -33,7 +33,7 @@ class FacultyProfile(models.Model):
     Extended profile for faculty members
     Linked to Django's built-in User model
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='faculty_profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='faculty_profile') One User → One FacultyProfile, If user is deleted → faculty profile deleted.
     employee_id = models.CharField(max_length=20, unique=True)
     department = models.CharField(max_length=100)
     designation = models.CharField(max_length=100)
