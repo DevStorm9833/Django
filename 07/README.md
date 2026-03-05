@@ -79,7 +79,7 @@ Django internally checks:
 - Model constraints - age negative 
 '''
         if form.is_valid():
-            leave = form.save(commit=False)
+            leave = form.save(commit=False)     # form.save() - Create model object → Insert row into database. But with: commit=False - Django does not save yet.
             leave.reviewed_by = request.user
             leave.reviewed_on = timezone.now()
             
