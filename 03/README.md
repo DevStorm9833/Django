@@ -20,7 +20,7 @@ With ORM, You get:
 - Versioned DB schema
 - Rollbacks (Think of rollback as the "Undo" button for SQL commands.)
 
-```
+```python
 from django.db import models                            # gives ORM functionality , Without this → no database layer.
 from django.contrib.auth.models import User             # built-in authentication user model. Contains: username, password (hashed), email, first_name, last_name, permissions
 from django.core.validators import MinValueValidator    # Used for: MinValueValidator(1) - Value cannot be less than 1, Prevents negative leave days.
