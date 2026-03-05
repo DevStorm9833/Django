@@ -45,9 +45,9 @@ class FacultyProfile(models.Model):
         return f"{self.user.get_full_name()} ({self.employee_id})"
     
     class Meta:
-        verbose_name = "Faculty Profile"
-        verbose_name_plural = "Faculty Profiles"
-        ordering = ['user__first_name']
+        verbose_name = "Faculty Profile"            # human-readable singular name of your model.Leave request → Leave Request 
+        verbose_name_plural = "Faculty Profiles"    # you don’t define it, Django just adds “s” : FacultyProfile → Faculty profiles, Category → Categorys ❌ (wrong)
+        ordering = ['user__first_name']             # Default sorting.
 
 
 class LeaveType(models.Model):
