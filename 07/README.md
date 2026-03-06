@@ -94,8 +94,7 @@ Django internally checks:
                     leave_balance.used_leaves += float(leave.number_of_days)
                     leave_balance.save()
                     
-                    messages.success(request, f'Leave request approved for {leave.faculty.user.get_full_name()}.')
-''' LeaveRequest → FacultyProfile → User '''
+                    messages.success(request, f'Leave request approved for {leave.faculty.user.get_full_name()}.') # LeaveRequest → FacultyProfile → User 
                 except LeaveBalance.DoesNotExist:
                     messages.warning(request, 'Leave approved but balance not found.')
             else:
