@@ -139,8 +139,8 @@ def all_leaves(request):
     rejected_count = LeaveRequest.objects.filter(status='rejected').count()
     
     # Get unique departments for filter
-    from .models import FacultyProfile
-    departments = FacultyProfile.objects.values_list('department', flat=True).distinct()
+    from .models import FacultyProfile    # id, name, department
+    departments = FacultyProfile.objects.values_list('department', flat=True).distinct()    Django ORM manager
     
     context = {
         'leave_requests': leave_requests,
