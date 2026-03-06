@@ -85,7 +85,7 @@ Django internally checks:
             
             # Update leave balance if approved
             if leave.status == 'approved':
-                try:
+                try:                            # if-else → Decision Making, try-except → Error Handling, Eg. ZeroDivisionError
                     leave_balance = LeaveBalance.objects.get(
                         faculty=leave.faculty,
                         leave_type=leave.leave_type,
