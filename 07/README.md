@@ -154,3 +154,40 @@ def all_leaves(request):
     }
     return render(request, 'leaves/all_leaves.html', context)
 ```
+
+
+```
+from django.urls import path   # . means current folder (your app).
+from . import views
+
+app_name = 'leaves'  # This creates a namespace for the app. Because multiple apps can have same URL names.
+
+urlpatterns = [      # This is a Python list containing all URL routes.
+    path('', views.home, name='home'),   # So if user goes to: localhost:8000/leaves/, Django runs: views.home()
+    path('dashboard/', views.dashboard, name='dashboard'),     # Faculty dashboard showing: leave balance, recent leave requests, notifications
+    path('apply/', views.apply_leave, name='apply_leave'),
+    path('history/', views.leave_history, name='leave_history'),
+    path('profile/', views.profile, name='profile'),        
+    path('register/', views.register, name='register'),
+    
+    # Admin URLs
+    path('pending/', views.pending_requests, name='pending_requests'),
+    path('review/<int:leave_id>/', views.review_leave, name='review_leave'),
+    path('all-leaves/', views.all_leaves, name='all_leaves'),
+]
+```
+
+'''
+User enters URL
+        ↓
+urls.py checks patterns
+        ↓
+Correct view function executes
+        ↓
+View talks to models
+        ↓
+Data sent to template
+        ↓
+HTML returned to browser
+'''
+
