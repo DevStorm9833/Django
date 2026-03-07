@@ -156,7 +156,7 @@ def all_leaves(request):
 ```
 
 
-```
+```python
 from django.urls import path   # . means current folder (your app).
 from . import views
 
@@ -177,7 +177,7 @@ urlpatterns = [      # This is a Python list containing all URL routes.
 ]
 ```
 
-'''
+```
 User enters URL
         ↓
 urls.py checks patterns
@@ -189,5 +189,5 @@ View talks to models
 Data sent to template
         ↓
 HTML returned to browser
-'''
+```
 
